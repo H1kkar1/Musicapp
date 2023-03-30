@@ -7,8 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="Play" HorizontalAlignment="Left" Margin="391,217,0,0" VerticalAlignment="Top"/>
-        <Button Content="Stop" HorizontalAlignment="Left" Margin="443,222,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <Button x:Name ="play" Content="Play" HorizontalAlignment="Left" Margin="280,202,0,0" VerticalAlignment="Top" Foreground="#FF0A0202" Click="Button_Play"/>
+        <Button x:Name ="stop" Content="Stop" HorizontalAlignment="Left" Margin="360,202,0,0" VerticalAlignment="Top" Click="Button_Stop"/>
+        <Button x:Name ="change" Content="change" HorizontalAlignment="Left" Margin="314,124,0,0" VerticalAlignment="Top" Click="Button_Change"/>
+        <TextBlock x:Name ="pole" HorizontalAlignment="Left" Margin="638,39,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
