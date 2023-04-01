@@ -5,12 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Musicapp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="460" Width="800">
     <Grid>
-        <Button x:Name ="play" Content="Play" HorizontalAlignment="Left" Margin="280,202,0,0" VerticalAlignment="Top" Foreground="#FF0A0202" Click="Button_Play"/>
-        <Button x:Name ="stop" Content="Stop" HorizontalAlignment="Left" Margin="360,202,0,0" VerticalAlignment="Top" Click="Button_Stop"/>
-        <Button x:Name ="change" Content="change" HorizontalAlignment="Left" Margin="314,124,0,0" VerticalAlignment="Top" Click="Button_Change"/>
+        <Button x:Name ="play" Content="Play" HorizontalAlignment="Left" Margin="41,398,0,0" VerticalAlignment="Top" Foreground="#FF0A0202" Click="Button_Play"/>
+        <Button x:Name ="stop" Content="Stop" HorizontalAlignment="Left" Margin="92,398,0,0" VerticalAlignment="Top" Click="Button_Stop"/>
+        <Button x:Name ="change" Content="change" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="Button_Change"/>
         <TextBlock x:Name ="pole" HorizontalAlignment="Left" Margin="638,39,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <Rectangle Margin="10,375,10,0" Stroke="Black"/>
+        <Slider Margin="160,399,10,0" VerticalAlignment="Top" Maximum="100" SelectionStart="0" ValueChanged="Slider_ValueChanged"/>
+        <Label x:Name ="treck_name" Content="Label" HorizontalAlignment="Left" Margin="207,379,0,0" VerticalAlignment="Top" Height="26" Width="183" FontSize="10"/>
 
     </Grid>
 </Window>
