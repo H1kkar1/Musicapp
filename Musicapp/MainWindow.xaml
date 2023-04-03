@@ -12,8 +12,8 @@
         <Button x:Name ="change" Content="change" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="Button_Change"/>
         <TextBlock x:Name ="pole" HorizontalAlignment="Left" Margin="638,39,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
         <Rectangle Margin="10,375,10,0" Stroke="Black"/>
-        <Slider Margin="160,399,10,0" VerticalAlignment="Top" Maximum="100" SelectionStart="0" ValueChanged="Slider_ValueChanged"/>
-        <Label x:Name ="treck_name" Content="Label" HorizontalAlignment="Left" Margin="207,379,0,0" VerticalAlignment="Top" Height="26" Width="183" FontSize="10"/>
+        <Slider x:Name="track_time" Maximum="100" Margin="160,399,10,0" VerticalAlignment="Top" SelectionStart="0" PreviewMouseLeftButtonDown="StartTrackChanget_tack_time" PreviewMouseLeftButtonUp="EndTrackChanget_tack_time" />
+        <Label x:Name ="track_name" Content="Label" HorizontalAlignment="Left" Margin="207,379,0,0" VerticalAlignment="Top" Height="26" Width="183" FontSize="10"/>
 
     </Grid>
 </Window>

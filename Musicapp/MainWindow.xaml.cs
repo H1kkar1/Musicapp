@@ -25,7 +25,7 @@ namespace Musicapp
         Dictionary<string,string> PATH = new Dictionary<string, string>();
         AudioFileReader audioFile;
         WaveOutEvent outputDevice;
-        //TimeSpan duration = outputDevice.TotalTime;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -57,7 +57,7 @@ namespace Musicapp
                 PATH.Add("name", name[name.Length - 1].Substring(0, name[name.Length - 1].Length - 4));
                 PATH.Add("expansion", expansion[1]);
                 pole.Text = PATH["path"] + "\n\n" + PATH["name"] + "\n\n" + PATH["expansion"];
-                treck_name.Content = PATH["name"];
+                track_name.Content = PATH["name"];
             }
         }
         private void Button_Play(object sender, RoutedEventArgs e)
@@ -71,15 +71,16 @@ namespace Musicapp
             {
                 audioFile = new AudioFileReader(@PATH["path"]);
                 outputDevice.Init(audioFile);
+                track_time.Maximum = audioFile.Length;
             }
             outputDevice.Play();
-           
         }
 
         private void Button_Stop(object sender, RoutedEventArgs e)
         {
             outputDevice.Pause();
-           
+            pole.Text = audioFile.Position.ToString();
+            pole.Text += "\n" + track_time.Maximum.ToString();
         }
         private void OnPlaybackStopped(object sender, StoppedEventArgs args)
         {
@@ -89,9 +90,25 @@ namespace Musicapp
             audioFile = null;
         }
 
-        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
+     
 
+        private void StartTrackChanget_tack_time(object sender, MouseButtonEventArgs e)
+        {
+            outputDevice.Pause();
+        }
+
+        private void EndTrackChanget_tack_time(object sender, MouseButtonEventArgs e)
+        {
+            // Calculate new position
+            long newPos = (long)track_time.Value;
+            // Force it to align to a block boundary
+            if ((newPos % audioFile.WaveFormat.BlockAlign) != 0)
+                newPos -= newPos % audioFile.WaveFormat.BlockAlign;
+            // Force new position into valid range
+            newPos = Math.Max(0, Math.Min(audioFile.Length, newPos));
+            // set position
+            audioFile.Position = newPos;
+            outputDevice.Play();
         }
     }
 }
