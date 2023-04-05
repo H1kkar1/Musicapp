@@ -7,13 +7,22 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="460" Width="800">
     <Grid>
-        <Button x:Name ="play" Content="Play" HorizontalAlignment="Left" Margin="41,398,0,0" VerticalAlignment="Top" Foreground="#FF0A0202" Click="Button_Play"/>
-        <Button x:Name ="stop" Content="Stop" HorizontalAlignment="Left" Margin="92,398,0,0" VerticalAlignment="Top" Click="Button_Stop"/>
+        <Rectangle Margin="10,375,10,0" Stroke="Black"/>
+        <Button x:Name ="play" Content="Play" HorizontalAlignment="Left" Margin="53,397,0,0" VerticalAlignment="Top" Foreground="#FF0A0202" Click="Button_Play"/>
+        <Button x:Name ="stop" Content="Stop" HorizontalAlignment="Left" Margin="50,397,0,0" VerticalAlignment="Top" Click="Button_Stop" Visibility="Hidden"/>
         <Button x:Name ="change" Content="change" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="Button_Change"/>
         <TextBlock x:Name ="pole" HorizontalAlignment="Left" Margin="638,39,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
-        <Rectangle Margin="10,375,10,0" Stroke="Black"/>
         <Slider x:Name="track_time" Maximum="100" Margin="160,399,10,0" VerticalAlignment="Top" SelectionStart="0" PreviewMouseLeftButtonDown="StartTrackChanget_tack_time" PreviewMouseLeftButtonUp="EndTrackChanget_tack_time" />
         <Label x:Name ="track_name" Content="Label" HorizontalAlignment="Left" Margin="207,379,0,0" VerticalAlignment="Top" Height="26" Width="183" FontSize="10"/>
+        <Button Content="Volume" HorizontalAlignment="Left" Margin="74,10,0,0" VerticalAlignment="Top" Click="Button_volume"/>
+        <ProgressBar x:Name="Master_value" HorizontalAlignment="Left" Height="10" Margin="12,358,0,0" VerticalAlignment="Top" Width="100">
+            <ProgressBar.RenderTransform>
+                <RotateTransform Angle="270"/>
+            </ProgressBar.RenderTransform>
+        </ProgressBar>
+        <Slider HorizontalAlignment="Left" Margin="686,412,0,0" VerticalAlignment="Top" Width="94" Height="15" TickPlacement="BottomRight" IsSnapToTickEnabled="True" ValueChanged="Slider_ValueChanged" Maximum="100" Minimum="0" Value="100"/>
+
+
 
     </Grid>
 </Window>
