@@ -17,22 +17,26 @@ using Microsoft.Win32;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 using NAudio.CoreAudioApi;
+using System.Text.Json;
+using System.IO;
 
 namespace Musicapp
 { 
     public partial class MainWindow : Window
     {
-        Dictionary<string,string> PATH = new Dictionary<string, string>();
         AudioFileReader audioFile;
         WaveOutEvent outputDevice;
         Volums_Settings vs;
         MMDevice device;
+        AudioTrack track;
+        FileInfo fileInfo = new FileInfo("Traks.json");
 
         public MainWindow()
         {
             InitializeComponent();
             Volums_Settings vs;
-            //stop.Visibility = Visibility.Hidden;
+            fileInfo.Exists ? : File.Create("Traks.json");
+            
         }
 
         public string GetPath()
@@ -55,20 +59,36 @@ namespace Musicapp
         //------------------------------------------------------------------------------------------------------------------------------
         private void Button_Change(object sender, RoutedEventArgs e)
         {
-            PATH.Clear();
-            string a = GetPath();
-            if (a != null)
+            string path = GetPath();
+            if (path != null)
             {
-                string[] name = a.Split(new char[] { (char)92 });
-                string[] expansion = name[name.Length - 1].Split(new char[] { '.' });
-                PATH.Add("path",a);
-                PATH.Add("name", name[name.Length - 1].Substring(0, name[name.Length - 1].Length - 4));
-                PATH.Add("expansion", expansion[1]);
-                pole.Text = PATH["path"] + "\n\n" + PATH["name"] + "\n\n" + PATH["expansion"];
-                track_name.Content = PATH["name"];
+                string[] names = path.Split(new char[] { (char)92 });
+                string[] expansion = names[names.Length - 1].Split(new char[] { '.' });
+                string name = names[names.Length - 1].Substring(0, names[names.Length - 1].Length - 4);
+                string ex = expansion[0];
+                track_name.Content = name;
+                pole.Text = name;
+                track = new AudioTrack
+                {
+                    name = name,
+                    path = @"" + path,
+                    id = 1,
+                    expansion = ex,
+                    time = "00:00"
+                };
+                string jsonString = JsonSerializer.Serialize(track);
+                Console.WriteLine(jsonString);
             }
         }
 
+        class AudioTrack
+        {
+            public string name { get; set; }
+            public string path { get; set; }
+            public int id { get; set; }
+            public string expansion { get; set; }
+            public string time { get; set; }
+        }
 
         // Старт | Стоп
         //------------------------------------------------------------------------------------------------------------------------------
@@ -83,7 +103,7 @@ namespace Musicapp
                 }
                 if (audioFile == null)
                 {
-                    audioFile = new AudioFileReader(@PATH["path"]);
+                    audioFile = new AudioFileReader(track.path);
                     outputDevice.Init(audioFile);
                     track_time.Maximum = audioFile.Length;
                     MMDeviceEnumerator deviceEnumerator = new MMDeviceEnumerator();
@@ -120,19 +140,22 @@ namespace Musicapp
 
         private void StartTrackChanget_tack_time(object sender, MouseButtonEventArgs e)
         {
-            outputDevice.Pause();
+            if(outputDevice!=null) outputDevice.Pause();
         }
 
         private void EndTrackChanget_tack_time(object sender, MouseButtonEventArgs e)
         {
-            long newPos = (long)track_time.Value;
-            if ((newPos % audioFile.WaveFormat.BlockAlign) != 0)
+            if (outputDevice != null)
             {
-                newPos -= newPos % audioFile.WaveFormat.BlockAlign;
+                long newPos = (long)track_time.Value;
+                if ((newPos % audioFile.WaveFormat.BlockAlign) != 0)
+                {
+                    newPos -= newPos % audioFile.WaveFormat.BlockAlign;
+                }
+                newPos = Math.Max(0, Math.Min(audioFile.Length, newPos));
+                audioFile.Position = newPos;
+                outputDevice.Play();
             }
-            newPos = Math.Max(0, Math.Min(audioFile.Length, newPos));
-            audioFile.Position = newPos;
-            outputDevice.Play();
         }
 
         // Всё связанное со звуком
