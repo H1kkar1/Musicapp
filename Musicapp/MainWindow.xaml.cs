@@ -21,7 +21,7 @@ using System.Text.Json;
 using System.IO;
 
 namespace Musicapp
-{ 
+{
     public partial class MainWindow : Window
     {
         AudioFileReader audioFile;
@@ -29,14 +29,24 @@ namespace Musicapp
         Volums_Settings vs;
         MMDevice device;
         AudioTrack track;
-        FileInfo fileInfo = new FileInfo("Traks.json");
+        public string jsonString;
+        public string[] audioTracks;
+        public FileInfo fileInfo = new FileInfo("Traks.json");
 
         public MainWindow()
         {
             InitializeComponent();
             Volums_Settings vs;
-            fileInfo.Exists ? : File.Create("Traks.json");
-            
+            if (fileInfo.Exists) 
+            { 
+                audioTracks = File.ReadAllLines("Traks.json"); 
+                foreach (string i in audioTracks)
+                {
+                    track_list.Items.Add(i);
+                }
+            }
+            else
+                File.Create("Traks.json");
         }
 
         public string GetPath()
@@ -76,8 +86,10 @@ namespace Musicapp
                     expansion = ex,
                     time = "00:00"
                 };
-                string jsonString = JsonSerializer.Serialize(track);
-                Console.WriteLine(jsonString);
+                jsonString = JsonSerializer.Serialize(track);
+                File.AppendAllText("Traks.json", jsonString);
+                Button b = new Button();
+                track_list.Items.Add(b);               
             }
         }
 

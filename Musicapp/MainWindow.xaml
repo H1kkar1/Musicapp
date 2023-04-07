@@ -16,7 +16,7 @@
         <Label x:Name ="track_name" Content="Label" HorizontalAlignment="Left" Margin="64,626,0,0" VerticalAlignment="Top" Height="26" Width="407" FontSize="10"/>
         <Button Content="Volume" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Click="Button_volume"/>
         <Slider HorizontalAlignment="Left" Margin="471,629,0,0" VerticalAlignment="Top" Width="94" Height="15" TickPlacement="BottomRight" IsSnapToTickEnabled="True" ValueChanged="Slider_ValueChanged" Maximum="100" Minimum="0" Value="100"/>
-        <ListBox x:Name="Traklist" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="59,60,0,81"/>
+        <ListBox x:Name="track_list" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="59,60,0,81"/>
         <Button x:Name ="change" Content="change" HorizontalAlignment="Left" Margin="11,8,0,0" VerticalAlignment="Top" Click="Button_Change"/>
         <ProgressBar x:Name="Master_value" HorizontalAlignment="Left" Height="11" Margin="668,672,0,0" VerticalAlignment="Top" Width="60">
             <ProgressBar.RenderTransform>
