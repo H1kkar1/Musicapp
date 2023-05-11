@@ -13,6 +13,8 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using NAudio.Gui;
+ 
 
 namespace Musicapp
 {
@@ -21,26 +23,17 @@ namespace Musicapp
     /// </summary>
     public partial class Volums_Settings : Window
     {
-       /* public Volums_Settings()
+        public Volums_Settings()
         {
             InitializeComponent();
         }
-        public EventHandler<VolumeChengetEventArgs> PropertyChanged;
 
-        public void OnPropertyChanged(double value)
-        {
-            if(PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs(value.ToString())); }
-        }
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        { 
+        {
             Slider volume_value = (Slider)sender;
-            OnPropertyChanged(volume_value.Value);          
+            if (Audio.outputDevice != null) { Audio.outputDevice.Volume = (float)volume_value.Value * 0.01F; }
         }
 
-        public class VolumeChengetEventArgs : EventArgs
-        {
-            public double volume { get; set; }
-        }
-       */
+        
     }
 }

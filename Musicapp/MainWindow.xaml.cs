@@ -22,16 +22,21 @@ using System.IO;
 
 namespace Musicapp
 {
+    public static class Audio
+    {
+        public static AudioFileReader audioFile;
+        public static WaveOutEvent outputDevice;
+    }
     public partial class MainWindow : Window
     {
-        AudioFileReader audioFile;
-        WaveOutEvent outputDevice;
+        
         Volums_Settings vs;
         MMDevice device;
         AudioTrack track;
         public string jsonString;
         public string[] audioTracks;
         public FileInfo fileInfo = new FileInfo("Traks.json");
+        string ischanget = null;
 
         public MainWindow()
         {
@@ -41,8 +46,10 @@ namespace Musicapp
             { 
                 audioTracks = File.ReadAllLines("Traks.json"); 
                 foreach (string i in audioTracks)
-                {
-                    track_list.Items.Add(i);
+                {   
+                    track = JsonSerializer.Deserialize<AudioTrack>(i);
+                    track_list.Items.Add(track);
+                    Console.WriteLine(track.ToString());                 
                 }
             }
             else
@@ -75,21 +82,51 @@ namespace Musicapp
                 string[] names = path.Split(new char[] { (char)92 });
                 string[] expansion = names[names.Length - 1].Split(new char[] { '.' });
                 string name = names[names.Length - 1].Substring(0, names[names.Length - 1].Length - 4);
-                string ex = expansion[0];
                 track_name.Content = name;
-                pole.Text = name;
                 track = new AudioTrack
                 {
                     name = name,
                     path = @"" + path,
-                    id = 1,
-                    expansion = ex,
                     time = "00:00"
                 };
+
+
+                if (Audio.outputDevice == null)
+                {
+                    Audio.outputDevice = new WaveOutEvent();
+                    Audio.outputDevice.PlaybackStopped += OnPlaybackStopped;
+                }
+
+                if (Audio.audioFile == null)
+                {
+                    ischanget = track.path;
+                    Audio.audioFile = new AudioFileReader(track.path);
+                    Audio.outputDevice.Init(Audio.audioFile);
+                    track_time.Maximum = Audio.audioFile.Length;
+                    MMDeviceEnumerator deviceEnumerator = new MMDeviceEnumerator();
+                    device = deviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
+                    Audio.outputDevice.Volume = 1;
+                }
+                Audio.outputDevice.Pause();
+                if (ischanget != null)
+                {
+                    if (track.path != ischanget)
+                    {
+
+                        Audio.outputDevice = null;
+                        Audio.outputDevice = new WaveOutEvent();
+                        Audio.audioFile = null;
+                        Audio.audioFile = new AudioFileReader(track.path);
+                        Audio.outputDevice.Init(Audio.audioFile);
+                    }
+                }
+
+                TimeSpan time = Audio.audioFile.TotalTime;
+                track.time = time.Minutes.ToString() + ":" + time.Seconds.ToString();
                 jsonString = JsonSerializer.Serialize(track);
-                File.AppendAllText("Traks.json", jsonString);
-                Button b = new Button();
-                track_list.Items.Add(b);               
+                File.AppendAllText("Traks.json", jsonString + '\n');
+                track_list.Items.Add(track);
+
             }
         }
 
@@ -97,8 +134,6 @@ namespace Musicapp
         {
             public string name { get; set; }
             public string path { get; set; }
-            public int id { get; set; }
-            public string expansion { get; set; }
             public string time { get; set; }
         }
 
@@ -107,43 +142,28 @@ namespace Musicapp
         private void Button_Play(object sender, RoutedEventArgs e)
         {
             try
-            {
-                if (outputDevice == null)
-                {
-                    outputDevice = new WaveOutEvent();
-                    outputDevice.PlaybackStopped += OnPlaybackStopped;
-                }
-                if (audioFile == null)
-                {
-                    audioFile = new AudioFileReader(track.path);
-                    outputDevice.Init(audioFile);
-                    track_time.Maximum = audioFile.Length;
-                    MMDeviceEnumerator deviceEnumerator = new MMDeviceEnumerator();
-                    device = deviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
-                    outputDevice.Volume = 1;
-                }
-                outputDevice.Play();
+            { 
+                Audio.outputDevice.Play();
                 stop.Visibility = Visibility.Visible;
             }
-            catch (KeyNotFoundException)
+            catch(Exception)
             {
-                MessageBox.Show("Вы не выбрали ни 1 песню!","Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Вы не выбрали ни 1 песню!", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
         private void Button_Stop(object sender, RoutedEventArgs e)
         {
-            outputDevice.Pause();
-            pole.Text = audioFile.Position.ToString();
-            pole.Text += "\n";
+            Audio.outputDevice.Pause();
+            
             play.Visibility = Visibility.Visible;
             stop.Visibility = Visibility.Hidden;
         }
         private void OnPlaybackStopped(object sender, StoppedEventArgs args)
         {
-            outputDevice.Dispose();
-            outputDevice = null;
-            audioFile.Dispose();
-            audioFile = null;
+            Audio.outputDevice.Dispose();
+            Audio.outputDevice = null;
+            Audio.audioFile.Dispose();
+            Audio.audioFile = null;
         }
 
 
@@ -152,21 +172,21 @@ namespace Musicapp
 
         private void StartTrackChanget_tack_time(object sender, MouseButtonEventArgs e)
         {
-            if(outputDevice!=null) outputDevice.Pause();
+            if(Audio.outputDevice != null) Audio.outputDevice.Pause();
         }
 
         private void EndTrackChanget_tack_time(object sender, MouseButtonEventArgs e)
         {
-            if (outputDevice != null)
+            if (Audio.outputDevice != null)
             {
                 long newPos = (long)track_time.Value;
-                if ((newPos % audioFile.WaveFormat.BlockAlign) != 0)
+                if ((newPos % Audio.audioFile.WaveFormat.BlockAlign) != 0)
                 {
-                    newPos -= newPos % audioFile.WaveFormat.BlockAlign;
+                    newPos -= newPos % Audio.audioFile.WaveFormat.BlockAlign;
                 }
-                newPos = Math.Max(0, Math.Min(audioFile.Length, newPos));
-                audioFile.Position = newPos;
-                outputDevice.Play();
+                newPos = Math.Max(0, Math.Min(Audio.audioFile.Length, newPos));
+                Audio.audioFile.Position = newPos;
+                Audio.outputDevice.Play();
             }
         }
 
@@ -185,11 +205,32 @@ namespace Musicapp
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Slider volume_value = (Slider)sender;
-            if (outputDevice != null) { outputDevice.Volume = (float)volume_value.Value * 0.01F; }
+            if (Audio.outputDevice != null) { Audio.outputDevice.Volume = (float)volume_value.Value * 0.01F; }
         }
         public void Volume_Value()
         {
             Master_value.Value = device.AudioMeterInformation.MasterPeakValue;
+        }
+
+        // Работа с треками в ListBox
+        //----------------------------------------------------------------------------------------------------------------------------
+        private void Button_DelTrack(object sender, RoutedEventArgs e)
+        {
+            track_list.Items.Remove(track_list.SelectedIndex);
+        }
+
+        private void track_list_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                Audio.outputDevice.Pause();
+                object ob = track_list.SelectedItem.ToString();
+                pole.Text = ob.ToString();
+                Audio.outputDevice.Play();
+            }
+            catch(Exception) {
+                MessageBox.Show("Давай по новой Миша, всё хуйня");
+            }
         }
     }
 }

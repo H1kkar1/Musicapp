@@ -5,13 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Musicapp"
         mc:Ignorable="d"
-        Title="Volums_Settings" Height="400" Width="500">
+        Title="Volums_Settings" Height="260" Width="500">
     <Grid>
-        <Slider HorizontalAlignment="Left" Margin="10,302,0,0" VerticalAlignment="Top" Width="208" Height="21" TickPlacement="BottomRight" IsSnapToTickEnabled="True" Maximum="100">
-            <Slider.RenderTransform>
-                <RotateTransform Angle="270" />
-            </Slider.RenderTransform>
-        </Slider>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Horizontal" Grid.Column="0">
+            <Slider Orientation="Vertical" Width="23" ValueChanged="Slider_ValueChanged" Maximum="100" Value="100"/>
+        </StackPanel>
+        
+
 
     </Grid>
 </Window>
