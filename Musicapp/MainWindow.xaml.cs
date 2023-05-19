@@ -112,7 +112,6 @@ namespace Musicapp
                 {
                     if (track.path != ischanget)
                     {
-
                         Audio.outputDevice = null;
                         Audio.outputDevice = new WaveOutEvent();
                         Audio.audioFile = null;
@@ -120,13 +119,18 @@ namespace Musicapp
                         Audio.outputDevice.Init(Audio.audioFile);
                     }
                 }
-
-                TimeSpan time = Audio.audioFile.TotalTime;
-                track.time = time.Minutes.ToString() + ":" + time.Seconds.ToString();
-                jsonString = JsonSerializer.Serialize(track);
-                File.AppendAllText("Traks.json", jsonString + '\n');
-                track_list.Items.Add(track);
-
+                for(int i = 0; i < track_list.Items.Count; i++)
+                {
+                    if (!track_list.Items.Contains(track)) 
+                    {
+                        track_list.Items.RemoveAt(i);
+                        TimeSpan time = Audio.audioFile.TotalTime;
+                        track.time = time.Minutes.ToString() + ":" + time.Seconds.ToString();
+                        jsonString = JsonSerializer.Serialize(track);
+                        File.AppendAllText("Traks.json", jsonString + '\n');
+                        track_list.Items.Add(track);
+                    }
+                }
             }
         }
 
@@ -221,14 +225,44 @@ namespace Musicapp
 
         private void track_list_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            AudioTrack ischanget = new AudioTrack();
             try
             {
-                Audio.outputDevice.Pause();
-                object ob = track_list.SelectedItem.ToString();
-                pole.Text = ob.ToString();
+                if (Audio.outputDevice != null)
+                {
+                    Audio.outputDevice.Pause();
+                    ischanget = (AudioTrack)e.AddedItems[0];
+                    if (track.path != ischanget.path)
+                    {
+                        track = (AudioTrack)e.AddedItems[0];
+                        Audio.audioFile = null;
+                        Audio.outputDevice = null;
+                        Audio.outputDevice = new WaveOutEvent();
+                        Audio.audioFile = new AudioFileReader(track.path);
+                        Audio.outputDevice.Init(Audio.audioFile);
+                        track_name.Content = ischanget.name;
+                    }
+                    else
+                    {
+                        Audio.outputDevice.Play();
+                    }
+                }
+                else
+                {
+                    track = (AudioTrack)e.AddedItems[0];
+                    Audio.outputDevice = new WaveOutEvent();
+                    Audio.outputDevice.PlaybackStopped += OnPlaybackStopped;
+                    Audio.audioFile = new AudioFileReader(track.path);
+                    Audio.outputDevice.Init(Audio.audioFile);
+                    track_time.Maximum = Audio.audioFile.Length;
+                    MMDeviceEnumerator deviceEnumerator = new MMDeviceEnumerator();
+                    device = deviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
+                    Audio.outputDevice.Volume = 1;
+                    track_name.Content = track.name;
+                }
                 Audio.outputDevice.Play();
             }
-            catch(Exception) {
+            catch(Exception ex) {
                 MessageBox.Show("Давай по новой Миша, всё хуйня");
             }
         }
