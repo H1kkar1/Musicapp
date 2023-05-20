@@ -29,11 +29,12 @@ namespace Musicapp
     }
     public partial class MainWindow : Window
     {
-        
+
         Volums_Settings vs;
         MMDevice device;
         AudioTrack track;
         public string jsonString;
+        public List<string> jsonRecords = new List<string> { };
         public string[] audioTracks;
         public FileInfo fileInfo = new FileInfo("Traks.json");
         string ischanget = null;
@@ -53,7 +54,10 @@ namespace Musicapp
                 }
             }
             else
+            {
                 File.Create("Traks.json");
+            }
+               
         }
 
         public string GetPath()
@@ -119,18 +123,23 @@ namespace Musicapp
                         Audio.outputDevice.Init(Audio.audioFile);
                     }
                 }
-                for(int i = 0; i < track_list.Items.Count; i++)
-                {
-                    if (!track_list.Items.Contains(track)) 
-                    {
-                        track_list.Items.RemoveAt(i);
-                        TimeSpan time = Audio.audioFile.TotalTime;
-                        track.time = time.Minutes.ToString() + ":" + time.Seconds.ToString();
-                        jsonString = JsonSerializer.Serialize(track);
-                        File.AppendAllText("Traks.json", jsonString + '\n');
-                        track_list.Items.Add(track);
-                    }
-                }
+
+                TimeSpan time = Audio.audioFile.TotalTime;
+                track.time = time.Minutes.ToString() + ":" + time.Seconds.ToString();
+                jsonString = JsonSerializer.Serialize(track);
+                File.AppendAllText("Traks.json", jsonString + '\n');
+                track_list.Items.Add(track);
+
+                //for (int i = 0; i < track_list.Items.Count; i++)
+                //{
+                //    AudioTrack q = (AudioTrack)track_list.Items[i];
+                //    if (q.name == track.name)
+                //    {
+                //        track_list.Items.RemoveAt(i);
+                //        break;
+                //    }
+                //}
+
             }
         }
 
@@ -211,10 +220,6 @@ namespace Musicapp
             Slider volume_value = (Slider)sender;
             if (Audio.outputDevice != null) { Audio.outputDevice.Volume = (float)volume_value.Value * 0.01F; }
         }
-        public void Volume_Value()
-        {
-            Master_value.Value = device.AudioMeterInformation.MasterPeakValue;
-        }
 
         // Работа с треками в ListBox
         //----------------------------------------------------------------------------------------------------------------------------
@@ -265,6 +270,19 @@ namespace Musicapp
             catch(Exception ex) {
                 MessageBox.Show("Давай по новой Миша, всё хуйня");
             }
+        }
+
+        private void App_Close(object sender, EventArgs e)
+        {
+            //foreach(var i in jsonRecords)
+            //{
+            //    File.AppendAllText("Traks.json", i + '\n');
+            //}
+        }
+
+        private void Options(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

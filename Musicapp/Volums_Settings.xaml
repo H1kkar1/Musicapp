@@ -14,7 +14,13 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Orientation="Horizontal" Grid.Column="0">
-            <Slider Orientation="Vertical" Width="23" ValueChanged="Slider_ValueChanged" Maximum="100" Value="100"/>
+            <Slider
+                Maximum="100"
+                Minimum="0"
+                Orientation="Vertical"
+                Value="100" 
+                ValueChanged="Slider_ValueChanged"/>
+            
         </StackPanel>
         
 

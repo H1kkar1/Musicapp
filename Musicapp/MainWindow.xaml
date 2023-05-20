@@ -6,25 +6,69 @@
         xmlns:local="clr-namespace:Musicapp"
         xmlns:Wave="clr-namespace:NAudio.Wave;assembly=NAudio.WinForms" x:Class="Musicapp.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="750">
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="MainWindow" Height="780" Width="870" Closed="App_Close" ResizeMode="NoResize">
+    <Window.Background>
+        <ImageBrush Stretch="UniformToFill" ImageSource="/d419b8bb4fcbe0a27014f8c22564c615.jpg"/>
+    </Window.Background>
     <Grid>
-        <Rectangle Margin="-2,603,0,0" Stroke="Black"/>
-        <Button x:Name ="play" Content="Play" HorizontalAlignment="Left" Margin="19,629,0,0" VerticalAlignment="Top" Foreground="#FF0A0202" Click="Button_Play"/>
-        <Button x:Name ="stop" Content="Stop" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Stop" Margin="16,629,0,0" Visibility="Hidden"/>
-        <TextBlock x:Name ="pole" HorizontalAlignment="Left" Margin="74,10,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="50" Width="657"/>
-        <Slider x:Name="track_time" Maximum="100" Margin="0,608,170,0" VerticalAlignment="Top" SelectionStart="0" PreviewMouseLeftButtonDown="StartTrackChanget_tack_time" PreviewMouseLeftButtonUp="EndTrackChanget_tack_time" />
-        <Label x:Name ="track_name" Content="Label" HorizontalAlignment="Left" Margin="64,626,0,0" VerticalAlignment="Top" Height="26" Width="407" FontSize="10"/>
-        <Button Content="Volume" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Click="Button_volume"/>
-        <Button x:Name ="change" Content="change" HorizontalAlignment="Left" Margin="11,8,0,0" VerticalAlignment="Top" Click="Button_Change"/>
-        <ProgressBar x:Name="Master_value" HorizontalAlignment="Left" Height="11" Margin="668,672,0,0" VerticalAlignment="Top" Width="60">
-            <ProgressBar.RenderTransform>
-                <RotateTransform Angle="270"/>
-            </ProgressBar.RenderTransform>
-            <ProgressBar.DataContext>
-                <Wave:WaveOut/>
-            </ProgressBar.DataContext>
-        </ProgressBar>
-        <ListView x:Name="track_list" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="74,40,0,81" ItemsSource="{DynamicResource ResourceKey=tracks}" SelectionMode="Single" SelectionChanged="track_list_SelectionChanged" >
+        <Rectangle Margin="-2,628,0,0" Stroke="Black"/>
+
+        <Button
+            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+            Style="{StaticResource MaterialDesignIconForegroundButton}"
+            x:Name ="play"
+            Click="Button_Play"                
+            ToolTip="MaterialDesignIconForegroundButton" 
+            Margin="19,652,783,34" 
+            BorderBrush="Black" 
+            Background="#FFD0D0D0">
+            <materialDesign:PackIcon
+            Kind="Play" />
+        </Button>
+        <Button
+            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+            Style="{StaticResource MaterialDesignIconForegroundButton}"
+            x:Name ="stop"
+            Click="Button_Stop"                
+            ToolTip="MaterialDesignIconForegroundButton" 
+            Margin="19,652,783,34" 
+            BorderBrush="Black" 
+            Background="#FFD0D0D0"
+            Visibility="Hidden">
+            <materialDesign:PackIcon
+                Kind="Pause" />
+        </Button>
+        <TextBlock x:Name ="pole" HorizontalAlignment="Left" Margin="0,63,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="539" Width="152"/>
+        <Slider x:Name="track_time" Maximum="100" Margin="79,666,0,0" VerticalAlignment="Top" SelectionStart="0" PreviewMouseLeftButtonDown="StartTrackChanget_tack_time" PreviewMouseLeftButtonUp="EndTrackChanget_tack_time" HorizontalAlignment="Left" Width="771" />
+        <Label x:Name ="track_name" Content="Label" HorizontalAlignment="Left" Margin="79,635,0,0" VerticalAlignment="Top" Height="26" Width="407" FontSize="10"/>
+        <materialDesign:ColorZone
+            Padding="16"
+            Mode="PrimaryLight" Height="58">
+            <materialDesign:ColorZone.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF33CC99" Offset="0"/>
+                    <GradientStop Color="#FF9751B3" Offset="1"/>
+                </LinearGradientBrush>
+            </materialDesign:ColorZone.Background>
+            <StackPanel
+                Orientation="Horizontal">
+
+                <TextBlock
+                Margin="16,0,0,0"
+                VerticalAlignment="Center"
+                Text="Melodic-Line"
+                FontSize="20"/>
+            </StackPanel>
+
+        </materialDesign:ColorZone>
+        <ListView x:Name="track_list" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,63,0,106" ItemsSource="{DynamicResource ResourceKey=tracks}" SelectionMode="Single" SelectionChanged="track_list_SelectionChanged" HorizontalAlignment="Right" Width="698" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=name}" Width="200">Название</GridViewColumn>
@@ -33,7 +77,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
-
+        <Button x:Name="Volume" Content="Volume" Click="Button_volume" Margin="758,10,10,692"/>
+        <Button x:Name="Track_Change" Content="Change" Click="Button_Change" Margin="662,10,106,692"/>
 
 
     </Grid>
