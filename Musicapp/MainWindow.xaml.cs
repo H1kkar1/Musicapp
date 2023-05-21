@@ -159,7 +159,7 @@ namespace Musicapp
                 Audio.outputDevice.Play();
                 stop.Visibility = Visibility.Visible;
             }
-            catch(Exception)
+            catch(NullReferenceException)
             {
                 MessageBox.Show("Вы не выбрали ни 1 песню!", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
@@ -246,10 +246,12 @@ namespace Musicapp
                         Audio.audioFile = new AudioFileReader(track.path);
                         Audio.outputDevice.Init(Audio.audioFile);
                         track_name.Content = ischanget.name;
+                        stop.Visibility = Visibility.Visible;
                     }
                     else
                     {
                         Audio.outputDevice.Play();
+                        stop.Visibility = Visibility.Visible;
                     }
                 }
                 else
@@ -264,8 +266,10 @@ namespace Musicapp
                     device = deviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
                     Audio.outputDevice.Volume = 1;
                     track_name.Content = track.name;
+                    stop.Visibility = Visibility.Visible;
                 }
                 Audio.outputDevice.Play();
+                stop.Visibility = Visibility.Visible;
             }
             catch(Exception ex) {
                 MessageBox.Show("Давай по новой Миша, всё хуйня");
