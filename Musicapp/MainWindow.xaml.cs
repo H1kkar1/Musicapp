@@ -19,6 +19,7 @@ using NAudio.Wave.SampleProviders;
 using NAudio.CoreAudioApi;
 using System.Text.Json;
 using System.IO;
+using System.Windows.Threading;
 
 namespace Musicapp
 {
@@ -38,6 +39,7 @@ namespace Musicapp
         public string[] audioTracks;
         public FileInfo fileInfo = new FileInfo("Traks.json");
         string ischanget = null;
+        DispatcherTimer dispatcherTimer;
 
         public MainWindow()
         {
@@ -60,6 +62,27 @@ namespace Musicapp
                
         }
 
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            if(Audio.audioFile != null)
+                track_time.Value = Audio.audioFile.Position;
+            else
+            {
+                dispatcherTimer.Stop();
+                track_time.Value = 0.0;
+                play.Visibility = Visibility.Visible;
+                stop.Visibility = Visibility.Hidden;
+            }
+                
+        }
+        private void Track_Time_Value()
+        {
+            dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Start();
+        }
+        //Получаем путь до выбранной песни
         public string GetPath()
         {
             try
@@ -155,7 +178,7 @@ namespace Musicapp
         private void Button_Play(object sender, RoutedEventArgs e)
         {
             try
-            { 
+            {
                 Audio.outputDevice.Play();
                 stop.Visibility = Visibility.Visible;
             }
@@ -246,12 +269,15 @@ namespace Musicapp
                         Audio.audioFile = new AudioFileReader(track.path);
                         Audio.outputDevice.Init(Audio.audioFile);
                         track_name.Content = ischanget.name;
+                        Audio.outputDevice.Play();
                         stop.Visibility = Visibility.Visible;
+                        Track_Time_Value();
                     }
                     else
                     {
                         Audio.outputDevice.Play();
                         stop.Visibility = Visibility.Visible;
+                        Track_Time_Value();
                     }
                 }
                 else
@@ -267,9 +293,10 @@ namespace Musicapp
                     Audio.outputDevice.Volume = 1;
                     track_name.Content = track.name;
                     stop.Visibility = Visibility.Visible;
+                    Audio.outputDevice.Play();
+                    Track_Time_Value();
                 }
-                Audio.outputDevice.Play();
-                stop.Visibility = Visibility.Visible;
+               
             }
             catch(Exception ex) {
                 MessageBox.Show("Давай по новой Миша, всё хуйня");

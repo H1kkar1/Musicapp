@@ -13,7 +13,7 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="MainWindow" Height="809" Width="880" Closed="App_Close" >
+        Title="MainWindow" Height="809" Width="880" Closed="App_Close" ResizeMode="NoResize">
     <Window.Background>
         <ImageBrush ImageSource="/d419b8bb4fcbe0a27014f8c22564c615.png" Stretch="UniformToFill"/>
     </Window.Background>
