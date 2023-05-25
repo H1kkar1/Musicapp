@@ -7,8 +7,8 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="Musicapp.Volums_Settings"
     mc:Ignorable="d"
     Title="Volums_Settings" 
-    Height="260" 
-    Width="500"
+    Height="290" 
+    Width="520"
     WindowStyle="ToolWindow"
     WindowStartupLocation="CenterScreen"
     Background="Transparent">
@@ -23,7 +23,7 @@
                 </LinearGradientBrush>
             </Border.Background>
         </Border>
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" Margin="35,3,0,0">
             <Slider
                 Maximum="100"
                 Minimum="0"
@@ -40,8 +40,49 @@
                 </Slider.RenderTransform>
             </Slider>
         </StackPanel>
-        <TextBlock
-            Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
-            Margin="0,0,442,237" ><Run Text="Volume"/><LineBreak/><Run/></TextBlock>
+        <StackPanel Orientation="Horizontal" Margin="361,3,0,0">
+            <Slider
+                x:Name="Lv"
+                Maximum="100"
+                Minimum="0"
+                Orientation="Vertical"
+                Value="100" 
+                ValueChanged="VolumeL_ValueChanged" 
+                Height="214" Width="22" 
+                RenderTransformOrigin="0.5,0.5">
+                <Slider.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="1"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Slider.RenderTransform>
+            </Slider>
+        </StackPanel>
+        <StackPanel Margin="446,20,0,0">
+            <Slider
+                x:Name="Rv"
+                Maximum="100"
+                Minimum="0"
+                Orientation="Vertical"
+                Value="100" 
+                ValueChanged="VolumeR_ValueChanged" Height="214" Width="22" RenderTransformOrigin="0.5,0.5">
+                <Slider.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="1"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Slider.RenderTransform>
+            </Slider>
+
+        </StackPanel>
+
+
+        <Label Content="R-Volume" FontSize="15" Height="32" Margin="427,-7,0,219"/>
+        <Label Content="L-Volume" FontSize="15" Height="32" Margin="337,-7,91,219"/>
+        <Label Content="Master-Volume" FontSize="15" Height="32" Margin="0,-7,390,219"/>
     </Grid>
 </Window>

@@ -203,6 +203,21 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Synthwave-Transparent-Free-PNG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons8-свернуть-окно-64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Безымянный-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="vv.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="1.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="d419b8bb4fcbe0a27014f8c22564c615.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

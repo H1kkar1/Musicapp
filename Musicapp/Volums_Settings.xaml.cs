@@ -14,15 +14,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using NAudio.Gui;
- 
+using NAudio.Wave;
+using NAudio.Wave.SampleProviders;
+using NAudio.Utils;
+
 
 namespace Musicapp
 {
-    /// <summary>
-    /// Логика взаимодействия для Volums_Settings.xaml
-    /// </summary>
+   
     public partial class Volums_Settings : Window
     {
+        //StereoToMonoSampleProvider mono = new StereoToMonoSampleProvider(Audio.audioFile);
         public Volums_Settings()
         {
             InitializeComponent();
@@ -34,6 +36,20 @@ namespace Musicapp
             if (Audio.outputDevice != null) { Audio.outputDevice.Volume = (float)volume_value.Value * 0.01F; }
         }
 
-        
+        private void VolumeR_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            //Audio.outputDevice.Pause();
+            //mono.RightVolume = (float)Rv.Value * 0.01F;
+            //Audio.outputDevice.Init(mono);
+            //Audio.outputDevice.Play();
+        }
+
+        private void VolumeL_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            //Audio.outputDevice.Pause();
+            //mono.RightVolume = (float)Lv.Value * 0.01F;
+            //Audio.outputDevice.Init(mono);
+            //Audio.outputDevice.Play();
+        }
     }
 }

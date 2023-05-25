@@ -20,6 +20,7 @@ using NAudio.CoreAudioApi;
 using System.Text.Json;
 using System.IO;
 using System.Windows.Threading;
+using NAudio.Utils;
 
 namespace Musicapp
 {
@@ -61,7 +62,7 @@ namespace Musicapp
             }
                
         }
-
+        //Делегат который вызываеться DispatcherTimer и меняет положение слайдера
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             if(Audio.audioFile != null)
@@ -75,6 +76,7 @@ namespace Musicapp
             }
                 
         }
+        // Запуск изменения положения слвйдера относительно положения песни
         private void Track_Time_Value()
         {
             dispatcherTimer = new DispatcherTimer();
@@ -311,9 +313,24 @@ namespace Musicapp
             //}
         }
 
-        private void Options(object sender, RoutedEventArgs e)
+        private void Minimize(object sender, RoutedEventArgs e)
         {
+            this.WindowState = WindowState.Minimized;
+        }
 
+        private void Full_Screen(object sender, RoutedEventArgs e)
+        {
+            if(this.WindowState != WindowState.Normal)
+                this.WindowState = WindowState.Normal;
+            else
+                this.WindowState = WindowState.Maximized;
+        }
+
+        
+
+        private void Closing_W(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

@@ -13,27 +13,33 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="MainWindow" Height="809" Width="880" Closed="App_Close" ResizeMode="NoResize">
+        Title="Melodic-Line" Height="810" Width="880" Closed="App_Close" ResizeMode="NoResize" Icon="/Synthwave-Transparent-Free-PNG.png"
+        WindowStyle="None">
     <Window.Background>
         <ImageBrush ImageSource="/d419b8bb4fcbe0a27014f8c22564c615.png" Stretch="UniformToFill"/>
     </Window.Background>
     <Grid>
-        <Rectangle Margin="-2,624,0,0" Stroke="Black" Opacity="0.3">
-            <Rectangle.Fill>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black" Offset="0.577"/>
-                    <GradientStop Color="#FFFF00EA" Offset="0.426"/>
-                </LinearGradientBrush>
-            </Rectangle.Fill>
-        </Rectangle>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="90*" />
+            <ColumnDefinition Width="700*" />
+            <ColumnDefinition Width="90*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="31*" />
+            <RowDefinition Height="283*" />
+            <RowDefinition Height="91*"/>
+
+        </Grid.RowDefinitions>
 
         <Button
-            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}"
             Style="{StaticResource MaterialDesignIconForegroundButton}"
             x:Name ="play"
             Click="Button_Play"                
             ToolTip="MaterialDesignIconForegroundButton" 
-            Margin="19,652,783,34" BorderBrush="Black">
+            BorderBrush="Black"
+            Grid.Row="2" Margin="32,86,10,48">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFAA01C8"/>
@@ -43,15 +49,43 @@
             <materialDesign:PackIcon
             Kind="Play" />
         </Button>
+
+        <Rectangle Margin="-2,38,0,0" Stroke="Black" Opacity="0.3"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="3"
+                   Grid.Row="2"
+                   >
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black" Offset="0.577"/>
+                    <GradientStop Color="#FFFF00EA" Offset="0.426"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <Slider x:Name="track_time" 
+                Maximum="100" 
+                Margin="85,100,0,0" 
+                VerticalAlignment="Top" 
+                SelectionStart="0" 
+                PreviewMouseLeftButtonDown="StartTrackChanget_tack_time" 
+                PreviewMouseLeftButtonUp="EndTrackChanget_tack_time" 
+                HorizontalAlignment="Left" Width="771" Foreground="#FFF500FF" 
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Grid.Row="2" 
+                Height="20"
+                Grid.RowSpan="1"/>
         <Button
-            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}"
             Style="{StaticResource MaterialDesignIconForegroundButton}"
             x:Name ="stop"
             Click="Button_Stop"                
             ToolTip="MaterialDesignIconForegroundButton" 
-            Margin="19,652,783,34" 
+            Margin="32,86,10,48" 
             BorderBrush="Black"
-            Visibility="Hidden">
+            Visibility="Hidden"
+            Grid.Row="2" Cursor="Hand">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFBB2543"/>
@@ -61,9 +95,14 @@
             <materialDesign:PackIcon
                 Kind="Pause" />
         </Button>
-        
-        <Slider x:Name="track_time" Maximum="100" Margin="82,682,0,0" VerticalAlignment="Top" SelectionStart="0" PreviewMouseLeftButtonDown="StartTrackChanget_tack_time" PreviewMouseLeftButtonUp="EndTrackChanget_tack_time" HorizontalAlignment="Left" Width="771" Foreground="#FFF500FF" />
-        <Label x:Name ="track_name" Content="" FontSize="16" HorizontalAlignment="Left" Margin="104,642,0,0" VerticalAlignment="Top" Height="26" Width="407"  Foreground="#DDFFFFFF">
+        <Label x:Name ="track_name" 
+               Content="" 
+               FontSize="16" 
+               HorizontalAlignment="Left"  
+               VerticalAlignment="Top" 
+               Height="26" Width="407"  Foreground="#DDFFFFFF"
+               Grid.Column="1"
+               Grid.Row="2">
             <Label.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>
@@ -73,25 +112,24 @@
         </Label>
         <materialDesign:ColorZone
             Padding="16"
-            Mode="PrimaryLight" Height="58">
+            Mode="PrimaryLight" Height="58"
+            Grid.Column="0"
+            Grid.ColumnSpan="3" VerticalAlignment="Center">
             <materialDesign:ColorZone.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF963147" Offset="0"/>
                     <GradientStop Color="#FFA326BB" Offset="1"/>
                 </LinearGradientBrush>
             </materialDesign:ColorZone.Background>
-            <StackPanel
-                Orientation="Horizontal">
-
-                <TextBlock
-                Margin="16,0,0,0"
-                VerticalAlignment="Center"
-                Text="Melodic-Line"
-                FontSize="20" Foreground="White"/>
-            </StackPanel>
 
         </materialDesign:ColorZone>
-        <ListView x:Name="track_list" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,63,0,140" ItemsSource="{DynamicResource ResourceKey=tracks}" SelectionMode="Single" SelectionChanged="track_list_SelectionChanged" HorizontalAlignment="Right" Width="800" Foreground="#DDFFFFFF" >
+        <ListView x:Name="track_list" 
+                  d:ItemsSource="{d:SampleData ItemCount=5}" 
+                  Margin="0,63,0,49" ItemsSource="{DynamicResource ResourceKey=tracks}" 
+                  SelectionMode="Single" SelectionChanged="track_list_SelectionChanged" 
+                  HorizontalAlignment="Right" Width="800" Foreground="#DDFFFFFF"
+                  Grid.ColumnSpan="3"
+                  Grid.Row="1">
             <ListView.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>
@@ -100,14 +138,36 @@
             </ListView.BorderBrush>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=name}" Width="220"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=time}" Width="70"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=path}" Width="340"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding name}" Width="220"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding time}" Width="70"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding path}" Width="340"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="Volume" Content="Volume" Click="Button_volume" Margin="763,13,5,725"/>
-        <Button x:Name="Track_Change" Content="Add Track" Click="Button_Change" Margin="646,13,122,725"/>
+
+        <Button x:Name="Volume" Content="Volume" Click="Button_volume" Grid.Column="0" Margin="5,13,0,17" Grid.Row="0" Cursor="Hand" />
+        <Button x:Name="Track_Change" Content="Add Track" Click="Button_Change" Width="100" Grid.Column="1" Grid.Row="0" Margin="10,13,590,17"/>
+
+
+
+        <Button x:Name="Mimimize" Margin="20,22,55,25" Click="Minimize" Grid.Column="2" Grid.Row="0" Height="15" Width="15">
+            <Button.Background>
+                <ImageBrush ImageSource="/1.png"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="Close" Margin="60,22,15,25" Click="Closing_W" Grid.Column="2" Grid.Row="0" Height="15" Width="15">
+            <Button.Background>
+                <ImageBrush ImageSource="/Безымянный-1.png" Stretch="Uniform"/>
+            </Button.Background>
+        </Button>
+
+
+        <Button x:Name="FullScreen" Click="Full_Screen" Grid.Column="2" Grid.Row="0" Height="15" Width="15" Margin="40,22,35,25">
+            <Button.Background>
+                <ImageBrush ImageSource="/vv.png"/>
+            </Button.Background>
+        </Button>
+
 
 
     </Grid>
