@@ -51,5 +51,21 @@ namespace Musicapp
             //Audio.outputDevice.Init(mono);
             //Audio.outputDevice.Play();
         }
+
+        private void Volume_close(object sender, RoutedEventArgs e)
+        {
+            this.Opacity = 0;
+        }
+
+        private void Volume_open(object sender, RoutedEventArgs e)
+        {
+            this.Opacity = 1;
+        }
+
+        private void OnClosind(object sender, CancelEventArgs e)
+        {
+            e.Cancel = true;     
+            this.Hide();
+        }
     }
 }
