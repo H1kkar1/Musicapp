@@ -1,0 +1,21 @@
+﻿<Window x:Class="Musicapp.CrealePlayList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Musicapp"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="CrealePlayList" Height="290" Width="300" Closing="OnClosing">
+    <Grid Margin="0,0,0,-6">
+        <TextBox
+            x:Name="pole"
+            MinWidth="72"
+            
+            materialDesign:HintAssist.Hint="PlayList name"
+            Margin="52,155,52,76" TextChanged="pole_TextChanged" />
+
+
+        <Button Content="OK" Click="Button_Click" Margin="94,176,111,26"/>
+    </Grid>
+</Window>

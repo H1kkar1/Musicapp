@@ -11,7 +11,7 @@
     Width="520"
     WindowStyle="ToolWindow"
     WindowStartupLocation="CenterScreen"
-    Background="Transparent" Closing="OnClosind">
+    Background="Transparent" Closing="OnClosing">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="5*"/>
@@ -47,7 +47,7 @@
                 </Slider.RenderTransform>
             </Slider>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Margin="361,20,0,0"  Grid.RowSpan="2">
+        <!--<StackPanel Orientation="Horizontal" Margin="361,20,0,0"  Grid.RowSpan="2">
             <Slider
                 x:Name="Lv"
                 Maximum="100"
@@ -67,8 +67,8 @@
                     </TransformGroup>
                 </Slider.RenderTransform>
             </Slider>
-        </StackPanel>
-        <StackPanel Margin="410,15,0,0" Grid.Row="1">
+        </StackPanel>-->
+        <!--<StackPanel Margin="410,15,0,0" Grid.Row="1">
             <Slider
                 x:Name="Rv"
                 Maximum="100"
@@ -85,13 +85,21 @@
                     </TransformGroup>
                 </Slider.RenderTransform>
             </Slider>
-
+        </StackPanel>-->
+        <StackPanel Orientation="Horizontal" Margin="237,23,1,2" Grid.RowSpan="2">
+            <Slider Orientation="Vertical" Margin="8" Minimum="{Binding MinimumGain}" Maximum="{Binding MaximumGain}" Value="{Binding Band1, Mode=TwoWay}"></Slider>
+            <Slider Orientation="Vertical" Margin="8" Minimum="{Binding MinimumGain}" Maximum="{Binding MaximumGain}" Value="{Binding Band2, Mode=TwoWay}"></Slider>
+            <Slider Orientation="Vertical" Margin="8" Minimum="{Binding MinimumGain}" Maximum="{Binding MaximumGain}" Value="{Binding Band3, Mode=TwoWay}"></Slider>
+            <Slider Orientation="Vertical" Margin="8" Minimum="{Binding MinimumGain}" Maximum="{Binding MaximumGain}" Value="{Binding Band4, Mode=TwoWay}"></Slider>
+            <Slider Orientation="Vertical" Margin="8" Minimum="{Binding MinimumGain}" Maximum="{Binding MaximumGain}" Value="{Binding Band5, Mode=TwoWay}"></Slider>
+            <Slider Orientation="Vertical" Margin="8" Minimum="{Binding MinimumGain}" Maximum="{Binding MaximumGain}" Value="{Binding Band6, Mode=TwoWay}"></Slider>
+            <Slider Orientation="Vertical" Margin="8" Minimum="{Binding MinimumGain}" Maximum="{Binding MaximumGain}" Value="{Binding Band7, Mode=TwoWay}"></Slider>
+            <Slider Orientation="Vertical" Margin="8" Minimum="{Binding MinimumGain}" Maximum="{Binding MaximumGain}" Value="{Binding Band8, Mode=TwoWay}"></Slider>
         </StackPanel>
 
-
-        <Label Content="R-Volume" FontSize="15" Margin="427,-17,0,32" Grid.Row="1"/>
-        <Label Content="L-Volume" FontSize="15" Margin="337,-17,91,32" Grid.Row="1"/>
-        <Label Content="Master-Volume" FontSize="15" Margin="0,7,407,32" Grid.RowSpan="2"/>
+        <!--<Label Content="R-Volume" FontSize="15" Margin="427,8,0,259" Grid.RowSpan="2"/>
+        <Label Content="L-Volume" FontSize="15" Margin="337,8,91,259" Grid.RowSpan="2"/>-->
+        <Label Content="Master-Volume" FontSize="15" Margin="0,7,407,255" Grid.RowSpan="2"/>
 
         
         <Button x:Name="Close" Click="Volume_close"  Grid.Row="0" Width="15" Height="15" Margin="496,5,9,5">

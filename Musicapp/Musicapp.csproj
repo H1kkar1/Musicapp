@@ -139,9 +139,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CrealePlayList.xaml.cs">
+      <DependentUpon>CrealePlayList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModelBase.cs" />
     <Compile Include="Volums_Settings.xaml.cs">
       <DependentUpon>Volums_Settings.xaml</DependentUpon>
     </Compile>
+    <Page Include="CrealePlayList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

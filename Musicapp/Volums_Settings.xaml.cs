@@ -18,10 +18,9 @@ using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 using NAudio.Utils;
 
-
 namespace Musicapp
 {
-   
+
     public partial class Volums_Settings : Window
     {
         //StereoToMonoSampleProvider mono = new StereoToMonoSampleProvider(Audio.audioFile);
@@ -62,9 +61,9 @@ namespace Musicapp
             this.Opacity = 1;
         }
 
-        private void OnClosind(object sender, CancelEventArgs e)
+        private void OnClosing(object sender, CancelEventArgs e)
         {
-            e.Cancel = true;     
+            e.Cancel = true;
             this.Hide();
         }
     }

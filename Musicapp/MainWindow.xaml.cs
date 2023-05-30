@@ -33,6 +33,7 @@ namespace Musicapp
     {
 
         Volums_Settings vs;
+        CrealePlayList cpl;
         MMDevice device;
         AudioTrack track;
         public string jsonString;
@@ -66,7 +67,11 @@ namespace Musicapp
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             if(Audio.audioFile != null)
+            {
+                track_time.Maximum = Audio.audioFile.Length;
                 track_time.Value = Audio.audioFile.Position;
+            }
+                
             else
             {
                 dispatcherTimer.Stop();
@@ -301,7 +306,7 @@ namespace Musicapp
                
             }
             catch(Exception ex) {
-                MessageBox.Show("Давай по новой Миша, всё хуйня");
+                MessageBox.Show("Давай по новой");
             }
         }
 
@@ -331,6 +336,21 @@ namespace Musicapp
         private void Closing_W(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void PlayList_Select(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Create_PalyList(object sender, RoutedEventArgs e)
+        {
+            if (cpl == null)
+            {
+               cpl = new CrealePlayList();
+            }
+            cpl.Owner = this;
+            cpl.Show();
         }
     }
 }

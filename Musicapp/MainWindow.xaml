@@ -32,24 +32,6 @@
 
         </Grid.RowDefinitions>
 
-        <Button
-            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}"
-            Style="{StaticResource MaterialDesignIconForegroundButton}"
-            x:Name ="play"
-            Click="Button_Play"                
-            ToolTip="MaterialDesignIconForegroundButton" 
-            BorderBrush="Black"
-            Grid.Row="2" Margin="32,86,10,48">
-            <Button.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFAA01C8"/>
-                    <GradientStop Color="#FFBB2543" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.Background>
-            <materialDesign:PackIcon
-            Kind="Play" />
-        </Button>
-
         <Rectangle Margin="-2,38,0,0" Stroke="Black" Opacity="0.3"
                    Grid.Column="0"
                    Grid.ColumnSpan="3"
@@ -76,25 +58,6 @@
                 Grid.Row="2" 
                 Height="20"
                 Grid.RowSpan="1"/>
-        <Button
-            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}"
-            Style="{StaticResource MaterialDesignIconForegroundButton}"
-            x:Name ="stop"
-            Click="Button_Stop"                
-            ToolTip="MaterialDesignIconForegroundButton" 
-            Margin="32,86,10,48" 
-            BorderBrush="Black"
-            Visibility="Hidden"
-            Grid.Row="2" Cursor="Hand">
-            <Button.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFBB2543"/>
-                    <GradientStop Color="#FFAA01C8" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.Background>
-            <materialDesign:PackIcon
-                Kind="Pause" />
-        </Button>
         <Label x:Name ="track_name" 
                Content="" 
                FontSize="16" 
@@ -167,7 +130,45 @@
                 <ImageBrush ImageSource="/vv.png"/>
             </Button.Background>
         </Button>
+        <Button
+            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}"
+            Style="{StaticResource MaterialDesignIconForegroundButton}"
+            x:Name ="play"
+            Click="Button_Play"                
+            ToolTip="MaterialDesignIconForegroundButton" 
+            BorderBrush="Black"
+            Grid.Row="2" Margin="32,86,10,48">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFAA01C8"/>
+                    <GradientStop Color="#FFBB2543" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+            <materialDesign:PackIcon
+            Kind="Play" />
+        </Button>
+        <Button
+            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}"
+            Style="{StaticResource MaterialDesignIconForegroundButton}"
+            x:Name ="stop"
+            Click="Button_Stop"                
+            ToolTip="MaterialDesignIconForegroundButton" 
+            Margin="32,86,10,48" 
+            BorderBrush="Black"
+            Visibility="Hidden"
+            Grid.Row="2" Cursor="Hand">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFBB2543"/>
+                    <GradientStop Color="#FFAA01C8" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+            <materialDesign:PackIcon
+                Kind="Pause" />
+        </Button>
 
+        <Button Click="Create_PalyList" Grid.Column="1" Margin="120,13,450,17" Content="Create playlist"/>
+        <ListBox  x:Name="play_list" Grid.Column="0" Grid.Row="1" SelectionChanged="PlayList_Select" />
 
 
     </Grid>
