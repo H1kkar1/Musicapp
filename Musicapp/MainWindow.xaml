@@ -13,7 +13,7 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="Melodic-Line" Height="810" Width="880" Closed="App_Close" ResizeMode="NoResize" Icon="/Synthwave-Transparent-Free-PNG.png"
+        Title="Melodic-Line" Height="810" Width="980" Closed="App_Close" ResizeMode="NoResize" Icon="/Synthwave-Transparent-Free-PNG.png"
         WindowStyle="None">
     <Window.Background>
         <ImageBrush ImageSource="/d419b8bb4fcbe0a27014f8c22564c615.png" Stretch="UniformToFill"/>
@@ -35,8 +35,7 @@
         <Rectangle Margin="-2,38,0,0" Stroke="Black" Opacity="0.3"
                    Grid.Column="0"
                    Grid.ColumnSpan="3"
-                   Grid.Row="2"
-                   >
+                   Grid.Row="2">
             <Rectangle.Fill>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black" Offset="0.577"/>
@@ -108,8 +107,8 @@
             </ListView.View>
         </ListView>
 
-        <Button x:Name="Volume" Content="Volume" Click="Button_volume" Grid.Column="0" Margin="5,13,0,17" Grid.Row="0" Cursor="Hand" />
-        <Button x:Name="Track_Change" Content="Add Track" Click="Button_Change" Width="100" Grid.Column="1" Grid.Row="0" Margin="10,13,590,17"/>
+        <Button x:Name="volume" Content="Volume" Click="Button_volume" Grid.Column="0" Margin="5,13,0,17" Grid.Row="0" Cursor="Hand" />
+        <Button x:Name="track_change" Content="Add Track" Click="Button_Change" Width="100" Grid.Column="1" Grid.Row="0" Margin="10,13,590,17"/>
 
 
 
@@ -167,9 +166,18 @@
                 Kind="Pause" />
         </Button>
 
-        <Button Click="Create_PalyList" Grid.Column="1" Margin="120,13,450,17" Content="Create playlist"/>
-        <ListBox  x:Name="play_list" Grid.Column="0" Grid.Row="1" SelectionChanged="PlayList_Select" />
-
-
+        <Button Click="Create_PalyList" Grid.Column="1" Margin="419,13,239,17" Content="Create playlist"/>
+        <Button Click="Play_with_links" Grid.Column="1" Margin="647,13,10,17" Content="Play with links"/>
+        <ListBox
+            x:Name="play_list" 
+            SelectionChanged="PlayList_Select"
+            Grid.Row="1" Foreground="#DDFFFFFF">
+        </ListBox>
+        <TextBox
+  VerticalAlignment="Top"
+  materialDesign:HintAssist.Hint="Playlist name"
+  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1" Margin="204,10,373,0" Height="35" Foreground="White"
+            />
+        <Frame x:Name="Page" Grid.ColumnSpan="3" Grid.RowSpan="3" Margin="0,60,0,0"/>
     </Grid>
 </Window>

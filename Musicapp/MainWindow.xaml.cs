@@ -46,7 +46,6 @@ namespace Musicapp
         public MainWindow()
         {
             InitializeComponent();
-            Volums_Settings vs;
             if (fileInfo.Exists) 
             { 
                 audioTracks = File.ReadAllLines("Traks.json"); 
@@ -63,7 +62,7 @@ namespace Musicapp
             }
                
         }
-        //Делегат который вызываеться DispatcherTimer и меняет положение слайдера
+        // Делегат который вызываеться DispatcherTimer и меняет положение слайдера
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             if(Audio.audioFile != null)
@@ -102,7 +101,7 @@ namespace Musicapp
                     return dlg.FileName;
                 }
                 return null;
-            } catch (Exception f) { return null; }
+            } catch (Exception) { return null; }
         }
 
 
@@ -305,7 +304,7 @@ namespace Musicapp
                 }
                
             }
-            catch(Exception ex) {
+            catch(Exception) {
                 MessageBox.Show("Давай по новой");
             }
         }
@@ -351,6 +350,39 @@ namespace Musicapp
             }
             cpl.Owner = this;
             cpl.Show();
+            
+            play_list.Items.Add(cpl.Set_PlayList());
+            
+        }
+
+        private void Play_with_links(object sender, RoutedEventArgs e)
+        {
+            if (Page.Content == null)
+            {
+                Page.Content = new Page1();
+                volume.Visibility = Visibility.Hidden;
+            }
+            else 
+            {
+                Page.Content = null;
+                volume.Visibility = Visibility.Visible;
+            }
+               
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            FileInfo fileInfo = new FileInfo($"Play_Lists\\{pole.Text}.json");
+            if (fileInfo.Exists)
+            {
+                MessageBox.Show("Такой плейлист уже существует");
+            }
+            else
+            {
+                File.Create($"Play_Lists\\{pole.Text}.json");
+                MessageBox.Show("Плейлист успешно создан!)");
+                this.Hide();
+            }
         }
     }
 }
