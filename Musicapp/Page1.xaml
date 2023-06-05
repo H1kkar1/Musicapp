@@ -15,9 +15,9 @@
       Title="Melodic-Line"
       Height="779" Width="980">
 
-    <Grid Margin="0,0,0,-20">
+    <Grid Margin="0,0,-58,-20">
         <Grid.Background>
-            <ImageBrush ImageSource="/d419b8bb4fcbe0a27014f8c22564c615.png"/>
+            <ImageBrush ImageSource="/d419b8bb4fcbe0a27014f8c22564c615.png" Stretch="UniformToFill"/>
         </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="90*" />

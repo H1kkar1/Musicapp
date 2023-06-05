@@ -7,8 +7,8 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="Musicapp.Volums_Settings"
     mc:Ignorable="d"
     Title="Volums_Settings" 
-    Height="310" 
-    Width="520"
+    Height="330" 
+    Width="538"
     WindowStyle="ToolWindow"
     WindowStartupLocation="CenterScreen"
     Background="Transparent" Closing="OnClosing">
@@ -100,14 +100,6 @@
         <!--<Label Content="R-Volume" FontSize="15" Margin="427,8,0,259" Grid.RowSpan="2"/>
         <Label Content="L-Volume" FontSize="15" Margin="337,8,91,259" Grid.RowSpan="2"/>-->
         <Label Content="Master-Volume" FontSize="15" Margin="0,7,407,255" Grid.RowSpan="2"/>
-
-        
-        <Button x:Name="Close" Click="Volume_close"  Grid.Row="0" Width="15" Height="15" Margin="496,5,9,5">
-            <Button.Background>
-                <ImageBrush ImageSource="/Безымянный-1.png"/>
-            </Button.Background>
-        </Button>
-
 
     </Grid>
 </Window>

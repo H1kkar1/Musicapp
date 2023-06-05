@@ -167,16 +167,19 @@
         </Button>
 
         <Button Click="Create_PalyList" Grid.Column="1" Margin="419,13,239,17" Content="Create playlist"/>
-        <Button Click="Play_with_links" Grid.Column="1" Margin="647,13,10,17" Content="Play with links"/>
+        <Button Click="Play_with_links" x:Name="play_with_links" Grid.Column="1" Margin="647,13,10,17" Content="Play with links"/>
         <ListBox
-            x:Name="play_list" 
+            x:Name="play_lists" 
             SelectionChanged="PlayList_Select"
+            SelectionMode="Single"
+            SelectedIndex="-1"
             Grid.Row="1" Foreground="#DDFFFFFF">
         </ListBox>
         <TextBox
-  VerticalAlignment="Top"
-  materialDesign:HintAssist.Hint="Playlist name"
-  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1" Margin="204,10,373,0" Height="35" Foreground="White"
+            VerticalAlignment="Top"
+            materialDesign:HintAssist.Hint="Playlist name"
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1" Margin="204,10,373,0" Height="35" Foreground="White"
+            x:Name="pole"
             />
         <Frame x:Name="Page" Grid.ColumnSpan="3" Grid.RowSpan="3" Margin="0,60,0,0"/>
     </Grid>

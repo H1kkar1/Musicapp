@@ -47,8 +47,7 @@ namespace Musicapp
         {
             try
             {
-                apiOut = new WasapiOut();
-                apiOut.Init(media_url);               
+                            
                 apiOut.Play();
                 stop.Visibility = Visibility.Visible;
             }
@@ -70,6 +69,10 @@ namespace Musicapp
             try
             {
                 media_url = new MediaFoundationReader(pole.Text);
+                apiOut = new WasapiOut();
+                apiOut.Init(media_url);
+                apiOut.Play();
+                stop.Visibility = Visibility.Visible;
             }
             catch (Exception) {
                 MessageBox.Show("Ссылка не правельно введена или не работает\nпопробуйте другую или убедитесь в корректности введённых данных");

@@ -33,34 +33,51 @@ namespace Musicapp
     {
 
         Volums_Settings vs;
-        CrealePlayList cpl;
         MMDevice device;
         AudioTrack track;
         public string jsonString;
         public List<string> jsonRecords = new List<string> { };
         public string[] audioTracks;
-        public FileInfo fileInfo = new FileInfo("Traks.json");
+        public string[] playLists;
+        public string playList = @"Play_Lists\Tracks.json";
+        public FileInfo fileInfotrack = new FileInfo(@"Play_Lists\Tracks.json");
+        public DirectoryInfo directotyplaylists = new DirectoryInfo("Play_Lists");
         string ischanget = null;
         DispatcherTimer dispatcherTimer;
 
         public MainWindow()
         {
             InitializeComponent();
-            if (fileInfo.Exists) 
+            if (fileInfotrack.Exists) 
             { 
-                audioTracks = File.ReadAllLines("Traks.json"); 
+                audioTracks = File.ReadAllLines(playList); 
                 foreach (string i in audioTracks)
                 {   
                     track = JsonSerializer.Deserialize<AudioTrack>(i);
                     track_list.Items.Add(track);
                     Console.WriteLine(track.ToString());                 
                 }
+                
             }
             else
             {
-                File.Create("Traks.json");
+                File.Create(@"Play_Lists\Tracks.json");
             }
-               
+
+            if (directotyplaylists.Exists)
+            {
+                playLists = Directory.GetFiles("Play_Lists");
+                foreach (string i in playLists)
+                {
+                    string[] pl = i.Split('.');
+                    play_lists.Items.Add(pl[0].Substring(11));
+                }
+            }
+            else
+            {
+                Directory.CreateDirectory("Play_Lists");
+            }
+
         }
         // Делегат который вызываеться DispatcherTimer и меняет положение слайдера
         private void dispatcherTimer_Tick(object sender, EventArgs e)
@@ -156,8 +173,12 @@ namespace Musicapp
                 TimeSpan time = Audio.audioFile.TotalTime;
                 track.time = time.Minutes.ToString() + ":" + time.Seconds.ToString();
                 jsonString = JsonSerializer.Serialize(track);
-                File.AppendAllText("Traks.json", jsonString + '\n');
+                File.AppendAllText($"{playList}", jsonString + '\n');
                 track_list.Items.Add(track);
+
+                Audio.outputDevice.Play();
+                stop.Visibility = Visibility.Visible;
+                Track_Time_Value();
 
                 //for (int i = 0; i < track_list.Items.Count; i++)
                 //{
@@ -304,16 +325,14 @@ namespace Musicapp
                 }
                
             }
-            catch(Exception) {
-                MessageBox.Show("Давай по новой");
-            }
+            catch(Exception) {}
         }
 
         private void App_Close(object sender, EventArgs e)
         {
             //foreach(var i in jsonRecords)
             //{
-            //    File.AppendAllText("Traks.json", i + '\n');
+            //    File.AppendAllText("Tracks.json", i + '\n');
             //}
         }
 
@@ -339,20 +358,16 @@ namespace Musicapp
 
         private void PlayList_Select(object sender, SelectionChangedEventArgs e)
         {
-
-        }
-
-        private void Create_PalyList(object sender, RoutedEventArgs e)
-        {
-            if (cpl == null)
+            string play_list_name = play_lists.SelectedItem.ToString();
+            audioTracks = File.ReadAllLines($"Play_Lists\\{play_list_name}.json");
+            track_list.Items.Clear();
+            foreach (string i in audioTracks)
             {
-               cpl = new CrealePlayList();
+                track = JsonSerializer.Deserialize<AudioTrack>(i);
+                track_list.Items.Add(track);
+               
             }
-            cpl.Owner = this;
-            cpl.Show();
-            
-            play_list.Items.Add(cpl.Set_PlayList());
-            
+            playList = play_list_name;
         }
 
         private void Play_with_links(object sender, RoutedEventArgs e)
@@ -361,16 +376,18 @@ namespace Musicapp
             {
                 Page.Content = new Page1();
                 volume.Visibility = Visibility.Hidden;
+                play_with_links.Content = "Back to audio";
             }
             else 
             {
                 Page.Content = null;
                 volume.Visibility = Visibility.Visible;
+                play_with_links.Content = "Play with links";
             }
                
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Create_PalyList(object sender, RoutedEventArgs e)
         {
             FileInfo fileInfo = new FileInfo($"Play_Lists\\{pole.Text}.json");
             if (fileInfo.Exists)
@@ -379,9 +396,11 @@ namespace Musicapp
             }
             else
             {
-                File.Create($"Play_Lists\\{pole.Text}.json");
+                File.Create($"Play_Lists\\{pole.Text}.json").Close();
+                         
+                File.Copy("Tracks.json", $"Play_Lists\\{pole.Text}.json",true);
                 MessageBox.Show("Плейлист успешно создан!)");
-                this.Hide();
+                play_lists.Items.Add(pole.Text);
             }
         }
     }
